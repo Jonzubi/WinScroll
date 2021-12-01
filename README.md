@@ -1,4 +1,2 @@
 # WinScroll
-A cursor capture and window snapping utility for Windows.
-
-![Winscroll](http://i.imgur.com/CezAw3t.png)
+Extremely simple version of original [https://github.com/Petethegoat/WinScroll](https://github.com/Petethegoat/WinScroll)
