@@ -23,10 +23,6 @@ namespace WinScroll
         private Rectangle captureRectangle;
         private Point p = new Point();
 
-        private const string versionString = "0.5";
-        private const string aboutURL = "http://www.github.com/Petethegoat";
-        //private const string apiURL = "https://api.github.com/repos/petethegoat/winscroll/releases/latest";
-        private const string registry = "SOFTWARE\\WinScroll";
         private int leftArrow;
         private int upArrow;
         private int downArrow;
@@ -82,11 +78,6 @@ namespace WinScroll
             captureHeight.LostFocus += new System.EventHandler(CaptureBounds);
 
             captureCheck.CheckedChanged += new System.EventHandler(captureCheckChanged);
-            trayCheck.CheckedChanged += new System.EventHandler(trayCheckChanged);
-            startupCheck.CheckedChanged += new System.EventHandler(startupCheckChanged);
-            windowCheck.CheckedChanged += new System.EventHandler(windowCheckChanged);
-
-            aboutLink.Click += new System.EventHandler(aboutLinkClicked);
         }
 
         public void Init()
@@ -163,26 +154,6 @@ namespace WinScroll
                 timer.Stop();
         }
 
-        private void trayCheckChanged(object sender, EventArgs e)
-        {
-            notifyIcon.Visible = !trayCheck.Checked;
-            RegistryKey rk = Registry.CurrentUser.OpenSubKey(registry, true);
-            if(rk != null)
-            {
-                rk.SetValue("HideTrayIcon", trayCheck.Checked ? "true" : "false");
-            }
-        }
-
-        private void startupCheckChanged(object sender, EventArgs e)
-        {
-            RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-
-            if(startupCheck.Checked)
-                rk.SetValue("WinScroll", Application.ExecutablePath.ToString());
-            else
-                rk.DeleteValue("WinScroll", false);
-        }
-
         private void windowShow(object sender, EventArgs e)
         {
             ShowWindow();
@@ -201,23 +172,6 @@ namespace WinScroll
                 Hide();
             }
             //Debug.WriteLine(WindowState.ToString() + ", " + Visible.ToString());
-        }
-
-        private void aboutLinkClicked(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process.Start(aboutURL);
-        }
-
-
-        private void windowCheckChanged(object sender, EventArgs e)
-        {
-            RegisterHotkeys();
-
-            RegistryKey rk = Registry.CurrentUser.OpenSubKey(registry, true);
-            if(rk != null)
-            {
-                rk.SetValue("WindowSnapping", windowCheck.Checked ? "true" : "false");
-            }
         }
 
         private void RegisterHotkeys()
@@ -243,110 +197,6 @@ namespace WinScroll
                 Macro.UnregisterHotKey(this, downArrow);
                 Macro.UnregisterHotKey(this, rightArrow);
             }
-        }
-
-        /*
-        public static IntPtr WinGetHandle(string wName)
-        {
-            IntPtr hWnd = IntPtr.Zero;
-
-            foreach(Process pList in Process.GetProcesses())
-                if(pList.MainWindowTitle.Contains(wName))
-                    hWnd = pList.MainWindowHandle;
-
-            return hWnd;
-        }
-
-        public static int HandleGetName(IntPtr hWnd)
-        {
-            foreach(Process pList in Process.GetProcesses())
-                if(pList.MainWindowHandle == hWnd)
-                    return pList.Id;
-
-            return -1;
-        }
-        */
-
-        protected override void WndProc(ref Message m)
-        {
-            if(m.Msg == Macro.WM_HOTKEY)
-            {
-                Point p;
-                NativeMethods.GetCursorPos(out p);
-                Screen activeScreen = Screen.FromPoint(p);
-                int screenWidth = activeScreen.WorkingArea.Width;
-                int screenHeight = activeScreen.WorkingArea.Height;
-
-                int col = (screenWidth / (int)columns.Value);
-                int row = (screenHeight / (int)rows.Value);
-                int w = 640;
-                int h = 480;
-                int x = 0;
-                int y = 0;
-                IntPtr window = NativeMethods.GetForegroundWindow();
-
-                Rect rect = new Rect();
-                NativeMethods.GetWindowRect(window, ref rect);
-
-                /*
-                Debug.Print(HandleGetName(window).ToString());
-                if(window.ToInt64() == 131262)  //don't move the start menu! - needs work, apparently these IDs aren't consistent
-                {
-                    return;
-                }
-                */
-
-                SnapLocation[] locations = leftLocations;
-
-                if((int)m.WParam == leftArrow)
-                    locations = leftLocations;
-                else if((int)m.WParam == upArrow)
-                    locations = upLocations;
-                else if((int)m.WParam == downArrow)
-                    locations = downLocations;
-                else if((int)m.WParam == rightArrow)
-                    locations = rightLocations;
-
-                SnapLocation s;
-                int result = 0;
-                for(int i = 0; i < locations.Length; i++)
-                {
-                    s = locations[i];
-
-                    w = s.width == 0 ? screenWidth : col * s.width;
-                    if(s.modulo)
-                        h = s.height == 0 ? screenHeight : (row * s.height) + screenHeight % row;
-                    else
-                        h = s.height == 0 ? screenHeight : row * s.height;
-                    x = col * s.x + activeScreen.Bounds.Left;
-                    y = row * s.y;
-
-                    if(rect.Left == x && rect.Top == y && rect.Right == w + x && rect.Bottom == h + y)
-                    {
-                        result = i + 1;
-                        break;
-                    }
-                }
-
-                if(result >= locations.Length)
-                    result = 0;
-                s = locations[result];
-
-                w = s.width == 0 ? screenWidth : col * s.width;
-                if(s.modulo)
-                    h = s.height == 0 ? screenHeight : (row * s.height) + screenHeight % row;
-                else
-                    h = s.height == 0 ? screenHeight : row * s.height;
-                x = col * s.x + activeScreen.Bounds.Left;
-                y = row * s.y;
-
-                NativeMethods.MoveWindow(window, x, y, w, h, true);
-            }
-            else if(m.Msg == NativeMethods.WM_SHOWME)
-            {
-                ShowWindow();
-            }
-            base.WndProc(ref m);
         }
 
         private void ShowWindow()
