@@ -97,53 +97,6 @@ namespace WinScroll
 
             captureRectangle = new Rectangle((int)captureX.Value, (int)captureY.Value, (int)captureWidth.Value, (int)captureHeight.Value);
 
-            //Startup
-            RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", false);
-            if(rk != null && rk.GetValue("WinScroll") != null)
-            {
-                startupCheck.Checked = true;
-                WindowState = FormWindowState.Minimized;
-                
-            }
-            //Loading
-            rk = Registry.CurrentUser.CreateSubKey(registry);
-            rk = Registry.CurrentUser.OpenSubKey(registry, false);
-            if(rk != null)
-            {
-                object o = rk.GetValue("HideTrayIcon");
-                if(o != null && o.ToString() == "true")
-                {
-                    trayCheck.Checked = true;
-                    notifyIcon.Visible = !trayCheck.Checked;
-                }
-                o = rk.GetValue("WindowSnapping");
-                if(o != null && o.ToString() == "true")
-                {
-                    windowCheck.Checked = true;
-                    RegisterHotkeys();
-                }
-            }
-
-            //allow us to be run from explorer's 'Run' - http://stackoverflow.com/a/4822749
-            rk = Registry.LocalMachine.CreateSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\winscroll.exe");
-            if(rk != null)
-            {
-                rk.SetValue("", Application.ExecutablePath);
-                rk.SetValue("Path", Path.GetDirectoryName(Application.ExecutablePath));
-            }
-
-            //check for updates!!!! wowowwwow
-            /*
-            ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
-            using(WebClient c = new WebClient())
-            {
-                string data = c.DownloadString(apiURL);
-                var json = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(data);
-                string latestVersion = json["tag_name"];
-                Debug.WriteLine(latestVersion);
-            }
-            */
-
             captureX.Value = Properties.Settings.Default.CaptureX;
             captureY.Value = Properties.Settings.Default.CaptureY;
             captureWidth.Value = Properties.Settings.Default.CaptureWidth;
