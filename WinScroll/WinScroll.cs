@@ -13,6 +13,7 @@ using System.Runtime.InteropServices;
 using Microsoft.Win32;
 using System.Diagnostics;
 using System.IO;
+using System.Xml;
 //using Newtonsoft.Json;
 
 namespace WinScroll
@@ -68,10 +69,17 @@ namespace WinScroll
             timer.Interval = 10;
             timer.Start();
 
-            captureRectangle = new Rectangle(0, 0, (int)captureWidth.Value, (int)captureHeight.Value);
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load("../../config.xml");
 
-            captureWidth.Value = Properties.Settings.Default.CaptureWidth;
-            captureHeight.Value = Properties.Settings.Default.CaptureHeight;
+            XmlNode config = xmlDocument.FirstChild.NextSibling;
+            string widthConfig = config.FirstChild.InnerText;
+            string heigthConfig = config.FirstChild.NextSibling.InnerText;
+
+            captureWidth.Value = Convert.ToDecimal(widthConfig);
+            captureHeight.Value = Convert.ToDecimal(heigthConfig);
+
+            captureRectangle = new Rectangle(0, 0, (int)captureWidth.Value, (int)captureHeight.Value);
             UpdateCaptureRect();
         }
 
