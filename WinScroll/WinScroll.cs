@@ -23,43 +23,20 @@ namespace WinScroll
         private System.Windows.Forms.Timer timer;
         private Rectangle captureRectangle;
         private Point p = new Point();
-
-        public struct SnapLocation
-        {
-            public int x, y, width, height;
-            public bool modulo;
-
-            public SnapLocation(int c, int r, int w, int h)
-            {
-                x = c;
-                y = r;
-                width = w;
-                height = h;
-                modulo = false;
-            }
-            public SnapLocation(int c, int r, int w, int h, bool m)
-            {
-                x = c;
-                y = r;
-                width = w;
-                height = h;
-                modulo = m;
-            }
-        }
+        private int captureWidth = 0;
+        private int captureHeight = 0;
 
         public WinScroll()
         {
             InitializeComponent();
             Init();
 
-            //SizeChanged += new System.EventHandler(formResize);
             Layout += new LayoutEventHandler(formResize);
             notifyIcon.DoubleClick += new System.EventHandler(windowShow);
             optionsToolStripMenuItem.Click += new System.EventHandler(windowShow);
             exitToolStripMenuItem.Click += new System.EventHandler(trayExit);
 
-            captureWidth.LostFocus += new System.EventHandler(CaptureBounds);
-            captureHeight.LostFocus += new System.EventHandler(CaptureBounds);
+            WindowState = FormWindowState.Minimized;
         }
 
         public void Init()
@@ -76,10 +53,10 @@ namespace WinScroll
             string widthConfig = config.FirstChild.InnerText;
             string heigthConfig = config.FirstChild.NextSibling.InnerText;
 
-            captureWidth.Value = Convert.ToDecimal(widthConfig);
-            captureHeight.Value = Convert.ToDecimal(heigthConfig);
+            captureWidth = Convert.ToInt32(widthConfig);
+            captureHeight = Convert.ToInt32(heigthConfig);
 
-            captureRectangle = new Rectangle(0, 0, (int)captureWidth.Value, (int)captureHeight.Value);
+            captureRectangle = new Rectangle(0, 0, captureWidth, captureHeight);
             UpdateCaptureRect();
         }
 
@@ -93,23 +70,17 @@ namespace WinScroll
         private void UpdateCapture()
         {    
             NativeMethods.ClipCursor(ref captureRectangle);
-            NativeMethods.MoveWindow(Handle, 0, 0, 400, 220, true);
+            NativeMethods.MoveWindow(Handle, 0, 0, 100, 30, true);
         }
 
         private void CaptureBounds(object sender, EventArgs e)
         {
-            if(string.IsNullOrEmpty(((Control)captureWidth).Text))
-                ((Control)captureWidth).Text = captureWidth.Value.ToString();
-
-            if(string.IsNullOrEmpty(((Control)captureHeight).Text))
-                ((Control)captureHeight).Text = captureHeight.Value.ToString();
-
             UpdateCaptureRect();
         }
 
         private void UpdateCaptureRect()
         {
-            captureRectangle = new Rectangle(0, 0, (int)captureWidth.Value, (int)captureHeight.Value);
+            captureRectangle = new Rectangle(0, 0, captureWidth, captureHeight);
         }
 
         private void windowShow(object sender, EventArgs e)
@@ -120,16 +91,6 @@ namespace WinScroll
         private void trayExit(object sender, EventArgs e)
         {
             Close();
-        }
-
-        private void formResize(object sender, EventArgs e)
-        {
-            //Debug.WriteLine(WindowState.ToString() + ", " + Visible.ToString());
-            if(WindowState == FormWindowState.Minimized)
-            {
-                Hide();
-            }
-            //Debug.WriteLine(WindowState.ToString() + ", " + Visible.ToString());
         }
 
         private void ShowWindow()
@@ -147,6 +108,16 @@ namespace WinScroll
         {
             timer.Stop();
             base.OnClosed(e);
+        }
+
+        private void formResize(object sender, EventArgs e)
+        {
+            //Debug.WriteLine(WindowState.ToString() + ", " + Visible.ToString());
+            if (WindowState == FormWindowState.Minimized)
+            {
+                Hide();
+            }
+            //Debug.WriteLine(WindowState.ToString() + ", " + Visible.ToString());
         }
     }
 }
