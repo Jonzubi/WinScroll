@@ -62,7 +62,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Macro.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="WinScroll.cs">
       <SubType>Form</SubType>
