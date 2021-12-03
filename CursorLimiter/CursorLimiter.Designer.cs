@@ -1,6 +1,6 @@
-﻿namespace WinScroll
+﻿namespace CursorLimiter
 {
-    partial class WinScroll
+    partial class CursorLimiter
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WinScroll));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CursorLimiter));
             this.tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.labelCoords = new System.Windows.Forms.Label();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
@@ -54,7 +54,7 @@
             // 
             this.notifyIcon.ContextMenuStrip = this.contextMenuStrip;
             this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
-            this.notifyIcon.Text = "WinScroll";
+            this.notifyIcon.Text = "CursorLimiter";
             this.notifyIcon.Visible = true;
             // 
             // contextMenuStrip
@@ -84,7 +84,7 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
-            // WinScroll
+            // CursorLimiter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -93,9 +93,9 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "WinScroll";
+            this.Name = "CursorLimiter";
             this.ShowInTaskbar = false;
-            this.Text = "WinScroll";
+            this.Text = "CursorLimiter";
             this.contextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

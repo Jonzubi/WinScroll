@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2013 for Windows Desktop
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1062
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinScroll", "WinScroll\WinScroll.csproj", "{3FAA0F95-F4F3-4820-B889-5C5864DD3A37}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CursorLimiter", "CursorLimiter\CursorLimiter.csproj", "{3FAA0F95-F4F3-4820-B889-5C5864DD3A37}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B1C091A9-147E-4A23-860A-89B658F3536B}"
 EndProject
@@ -20,5 +20,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4F906F36-2F34-4124-91D8-C72140DEEC9D}
 	EndGlobalSection
 EndGlobal

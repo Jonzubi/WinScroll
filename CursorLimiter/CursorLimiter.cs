@@ -16,9 +16,9 @@ using System.IO;
 using System.Xml;
 //using Newtonsoft.Json;
 
-namespace WinScroll
+namespace CursorLimiter
 {
-    public partial class WinScroll : Form
+    public partial class CursorLimiter : Form
     {
         private System.Windows.Forms.Timer timer;
         private Rectangle captureRectangle;
@@ -26,7 +26,7 @@ namespace WinScroll
         private int captureWidth = 0;
         private int captureHeight = 0;
 
-        public WinScroll()
+        public CursorLimiter()
         {
             InitializeComponent();
             Init();

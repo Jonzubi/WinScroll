@@ -7,8 +7,8 @@
     <ProjectGuid>{3FAA0F95-F4F3-4820-B889-5C5864DD3A37}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WinScroll</RootNamespace>
-    <AssemblyName>WinScroll</AssemblyName>
+    <RootNamespace>CursorLimiter</RootNamespace>
+    <AssemblyName>CursorLimiter</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -47,7 +47,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>winscroll.ico</ApplicationIcon>
+    <ApplicationIcon>CursorLimiter.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -63,11 +63,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NativeMethods.cs" />
-    <Compile Include="WinScroll.cs">
+    <Compile Include="CursorLimiter.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WinScroll.Designer.cs">
-      <DependentUpon>WinScroll.cs</DependentUpon>
+    <Compile Include="CursorLimiter.Designer.cs">
+      <DependentUpon>CursorLimiter.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -80,8 +80,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="WinScroll.resx">
-      <DependentUpon>WinScroll.cs</DependentUpon>
+    <EmbeddedResource Include="CursorLimiter.resx">
+      <DependentUpon>CursorLimiter.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -98,7 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="config.xml" />
-    <Content Include="winscroll.ico" />
+    <Content Include="CursorLimiter.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace WinScroll
+namespace CursorLimiter
 {
     static class Program
     {
-        static Mutex mutex = new Mutex(true, "{WinScroll-Pete-Goodfellow}");
+        static Mutex mutex = new Mutex(true, "{CursorLimiter}");
 
         /// <summary>
         /// The main entry point for the application.
@@ -20,7 +20,7 @@ namespace WinScroll
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new WinScroll());
+                Application.Run(new CursorLimiter());
                 mutex.ReleaseMutex();
             }
             else

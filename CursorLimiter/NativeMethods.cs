@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
 
-namespace WinScroll
+namespace CursorLimiter
 {
     public struct Rect
     {
